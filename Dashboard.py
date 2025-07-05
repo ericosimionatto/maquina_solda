@@ -258,7 +258,7 @@ def main():
     try:
         conn = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};'
-            'SERVER=localhost;'
+            'SERVER=20.195.200.158;'
             'DATABASE=FABRICA1;'
             'UID=sa;'
             'PWD=sql'
