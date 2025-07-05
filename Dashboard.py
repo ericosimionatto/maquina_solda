@@ -258,8 +258,8 @@ def main():
     try:
         conn = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};'
-            'SERVER=20.195.200.158;'
-            'DATABASE=FABRICA;'
+            'SERVER=localhost;'
+            'DATABASE=FABRICA1;'
             'UID=sa;'
             'PWD=sql'
         )
@@ -277,4 +277,4 @@ def main():
     conn.close()
 
 if __name__ == "__main__":
-    main()
+    main()                
