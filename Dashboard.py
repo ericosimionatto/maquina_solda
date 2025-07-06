@@ -63,18 +63,33 @@ def gerar_e_inserir_dados(conn, n=100):
 
 # Página de visualização da topologia
 def show_topology_page():
-    st.title("Topologia da Aplicação")
+    st.title("Topologia do Sistema")
     
-    if not Path("Topologia_aplicacao.html").exists():
+    if not Path("Topologia_Sistema.html").exists():
         st.error("Arquivo de topologia não encontrado.")
         return
     
     try:
-        with open("Topologia_aplicacao.html", "r", encoding="utf-8") as f:
+        with open("Topologia_Sistema.html", "r", encoding="utf-8") as f:
             html_content = f.read()
         st.components.v1.html(html_content, height=800, scrolling=True)
     except Exception as e:
         st.error(f"Erro ao carregar o arquivo de topologia: {e}")
+
+# Página de visualização do fluxo BPM
+def show_bpm_flow_page():
+    st.title("Fluxo BPM")
+    
+    if not Path("Fluxo_BPM.html").exists():
+        st.error("Arquivo de fluxo BPM não encontrado.")
+        return
+    
+    try:
+        with open("Fluxo_BPM.html", "r", encoding="utf-8") as f:
+            html_content = f.read()
+        st.components.v1.html(html_content, height=800, scrolling=True)
+    except Exception as e:
+        st.error(f"Erro ao carregar o arquivo de fluxo BPM: {e}")
 
 # Função para criar e exibir gráficos
 def display_charts(df_maquina, maquina):
@@ -168,6 +183,9 @@ def show_monitoring_page(conn):
         st.markdown("---")
         if st.button("Visualizar Topologia do Sistema"):
             st.session_state.current_page = "topology"
+        
+        if st.button("Visualizar Fluxo BPM"):
+            st.session_state.current_page = "bpm_flow"
 
     if not maquinas_selecionadas:
         st.warning("Selecione pelo menos uma máquina.")
@@ -259,7 +277,7 @@ def main():
         conn = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};'
             'SERVER=20.195.200.158;'
-            'DATABASE=FABRICA;'
+            'DATABASE=FABRICA1;'
             'UID=sa;'
             'PWD=sql'
         )
@@ -269,6 +287,10 @@ def main():
 
     if st.session_state.current_page == "topology":
         show_topology_page()
+        if st.button("Voltar para Monitoramento"):
+            st.session_state.current_page = "monitoring"
+    elif st.session_state.current_page == "bpm_flow":
+        show_bpm_flow_page()
         if st.button("Voltar para Monitoramento"):
             st.session_state.current_page = "monitoring"
     else:
